@@ -1,0 +1,10 @@
+{
+  "name": "so-chi-tieu",
+  "private": true,
+  "workspaces": ["part-a-class", "part-b-hooks"],
+  "scripts": {
+    "dev:a": "npm run dev -w part-a-class",
+    "dev:b": "npm run dev -w part-b-hooks",
+    "build": "npm run build --workspaces"
+  }
+}
