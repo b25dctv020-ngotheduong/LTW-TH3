@@ -1,0 +1,61 @@
+# Bài thực hành 03 (N2) - Lập trình Web: Sổ Chi Tiêu Cá Nhân
+
+## Thông tin sinh viên
+- *Họ và tên:* Ngô Thế Dương
+- *Mã sinh viên:* B25DCTV020
+
+---
+
+## Cấu trúc thư mục
+part-a-class/    # Ứng dụng viết bằng React Class Component
+part-b-hooks/    # Ứng dụng viết lại bằng Function Component & Hooks (tích hợp MockAPI)
+README.md        # Tài liệu hướng dẫn và phân tích kỹ thuật
+
+---
+
+## Hướng dẫn cài đặt và chạy dự án
+
+### 1. Chạy Phần A (part-a-class)
+cd part-a-class
+npm install
+npm run dev
+
+### 2. Chạy Phần B (part-b-hooks)
+cd part-b-hooks
+npm install
+npm run dev
+(Lưu ý: Nếu dự án tạo bằng Create React App thay vì Vite, dùng npm start thay cho npm run dev.)
+
+---
+
+## Các chức năng đã hoàn thiện
+
+### Phần A – Class Component
+- Chia component hợp lý, App giữ state danh sách khoản chi (dữ liệu mẫu viết sẵn trong code) và loại đang lọc.
+- Đồng hồ thời gian thực chạy mỗi giây và dừng đúng cách khi bị ẩn bằng componentDidMount và componentWillUnmount.
+- Form thêm khoản chi có validate dữ liệu đầu vào; danh sách dùng key, xóa có xác nhận; lọc theo loại (Ăn uống / Đi lại / Học tập / Giải trí) và hiển thị tổng tiền.
+- Tiêu đề tab trình duyệt hiển thị tổng chi, cập nhật bằng componentDidUpdate.
+
+### Phần B – Function Component + Hooks & Nâng cao
+- Viết lại toàn bộ Phần A bằng Function Component sử dụng useState và useEffect.
+- Lấy, thêm, xóa dữ liệu qua MockAPI bằng custom hook useFetch, có xử lý trạng thái đang tải và lỗi.
+- Dùng useRef để focus lại ô nhập sau khi thêm; dùng useContext cho chế độ sáng/tối.
+- Yêu cầu nâng cao: custom hook useClock, thống kê tổng tiền theo từng loại, ô tìm kiếm có độ trễ (debounce).
+
+---
+
+## Hooks đã khắc phục các thách thức của Class Component như thế nào trong bài?
+
+1. Tái sử dụng logic có trạng thái (Stateful Logic Reuse):
+   - Ở Class Component, logic đồng hồ hay logic gọi API kèm trạng thái tải/lỗi gắn chặt với component hoặc phải dùng HOC/Render Props phức tạp mới tái sử dụng được.
+   - Hooks cho phép tách gọn vào các custom hook như useFetch và useClock để tái sử dụng dễ dàng giữa các component.
+
+2. Gom logic theo tính năng thay vì chia nhỏ theo vòng đời:
+   - Với Class Component, một chức năng như đồng hồ hoặc cập nhật tiêu đề tab thường bị tách ra ở componentDidMount, componentDidUpdate và componentWillUnmount, dễ gây trùng lặp hoặc quên dọn dẹp timer.
+   - useEffect đặt logic khởi tạo và hàm cleanup của cùng một chức năng ở cùng một chỗ, rõ ràng và an toàn hơn.
+
+3. Giảm boilerplate và lỗi từ khóa this:
+   - Function Component kết hợp closure giúp tránh việc khai báo constructor, bind/xử lý ngữ cảnh this khi truyền hàm xử lý sự kiện xuống component con.
+
+4. Truy cập DOM và chia sẻ state toàn cục gọn hơn:
+   - useRef giúp trỏ thẳng tới ô input để focus sau khi thêm khoản chi; useContext giúp chia sẻ chế độ sáng/tối cho toàn bộ cây component mà không cần truyền props qua nhiều cấp trung gian.
